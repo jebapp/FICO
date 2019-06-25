@@ -1,0 +1,15 @@
+{
+  "name": "FICO bot",
+  "description": "The server side for Fico.",
+  "image": "heroku/python",
+  "repository": "https://github.com/jebapp/FICO.git",
+  "keywords": ["python", "flask" ],
+  "addons": [ "heroku-postgresql" ],
+  "environments": {
+    "test": {
+      "scripts": {
+        "test": "okgoogle_server.py test"
+      }
+    }
+  }
+}
