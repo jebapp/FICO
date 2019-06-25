@@ -6,7 +6,7 @@ import urllib
 from flask import make_response
 
 app = Flask(__name__)
-port = int(os.environ.get('PORT', 5000))
+
 
 def results1():
     req = request.get_json(force=True)
@@ -92,4 +92,5 @@ def webhook():
     return (jsonify(results1()))
 
 if __name__ == '__main__':
+   port = int(os.environ.get('PORT', 5000))
    app.run(port=port, host="0.0.0.0")
