@@ -95,9 +95,8 @@ def results1():
              response = 'Invalid Customer Number'
          else:
              Customer = file["d"]["results"][0]["Customer"] 
-	     NumberOfOpenItems = file["d"]["results"][0]["NumberOfOpenItems"]
              TotalOverdueAmtInDspCrcy_F = file["d"]["results"][0]["TotalOverdueAmtInDspCrcy_F"]
-             response = 'The total overdue amount is '+ TotalOverdueAmtInDspCrcy_F + ' for customer ' + Customer + 'and number of open items is ' + NumberOfOpenItems
+             response = 'The total overdue amount is '+ TotalOverdueAmtInDspCrcy_F + ' for customer ' + Customer + 'and number of open items is '
          return {'fulfillmentText': response}	
 	
 @app.route('/webhook', methods=['GET', 'POST'])
