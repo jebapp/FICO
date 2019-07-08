@@ -86,6 +86,19 @@ def results1():
              response = 'The amount for Supplier payment analysis of '+ sup_name + ' is' + amount  
          return {'fulfillmentText': response}
 	
+	####Future Receviables 
+    if (action == "ar_future"):
+         cnum = req['queryResult']['parameters']['customer_number']
+         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_FUTUREACCTRBLS_CDS/C_FUTUREACCTRBLS(P_DateFunction='TODAY',P_DisplayCurrency='USD',P_ExchangeRateType='M',P_NetDueInterval1InDays='30',P_NetDueInterval2InDays='60',P_NetDueInterval3InDays='90',P_NetDueInterval4InDays='120')/Results?$filter=Customer eq '%s'&$format=json" %cnum, auth=('Karunak1', 'Welcome@1234'), verify=False).json()
+        size = len(file['d']['results'])
+         if(size== 0):
+             response = 'Invalid Customer Number'
+         else:
+             Customer = file["d"]["results"][0]["Customer"]
+	     NumberOfOpenItems = file["d"]["results"][0]["NumberOfOpenItems"]
+             TotalOverdueAmtInDspCrcy_F = file["d"]["results"][0]["TotalOverdueAmtInDspCrcy_F"]
+             response = 'The total overdue amount is '+ TotalOverdueAmtInDspCrcy_F + ' for customer ' + Customer + 'and number of open items is ' + NumberOfOpenItems
+         return {'fulfillmentText': response}	
 	
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
