@@ -27,7 +27,7 @@ def results1():
 		 
 	#### cash discount utilization
     if (action == "ap_cash"):
-         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_APCSHDISCUTILIZATION_CDS/C_APCSHDISCUTILIZATION(P_StartDate=datetime'2019-04-22T00:00:00',P_DisplayCurrency='EUR')/Results?$format=json", auth=('Karunak1', 'Welcome@1234')).json()
+         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_APCSHDISCUTILIZATION_CDS/C_APCSHDISCUTILIZATION(P_StartDate=datetime'2019-04-22T00:00:00',P_DisplayCurrency='EUR')/Results?$format=json", auth=('Karunak1', 'Welcome@1234'), verify=False).json()
          cash = file["d"]["results"][0]["OfferedCshDiscInDspCrcy_E_F"]
          response = 'The cash discount offered is ' + cash    
          return {'fulfillmentText': response} 
@@ -35,7 +35,7 @@ def results1():
     #### days payable outstanding
     if (action == "ap_outstanding"):
          supplier = req['queryResult']['parameters']['supplierno']
-         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_APDAYSPAYOUTST_CDS/C_APDAYSPAYOUTST(P_Currency='USD',P_ExchangeRateType='M')/Results?$filter=(Supplier eq '%s')&$format=json"%(supplier), auth=('karunak1', 'Welcome@1234')).json()
+         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_APDAYSPAYOUTST_CDS/C_APDAYSPAYOUTST(P_Currency='USD',P_ExchangeRateType='M')/Results?$filter=(Supplier eq '%s')&$format=json"%(supplier), auth=('karunak1', 'Welcome@1234'), verify=False).json()
          size = len(file['d']['results'])
          if(size == 0):
 	         output = "Invalid Supplier Number"
