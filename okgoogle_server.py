@@ -15,7 +15,7 @@ def results1():
     #### future payables
     if (action == "ap_future"):
          supplier = req['queryResult']['parameters']['supplierno']		 
-         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_APFUTUREACCOUNTSPAYABLE_CDS/C_APFUTUREACCOUNTSPAYABLE(P_DateFunction='TODAY',P_DisplayCurrency='EUR',P_ExchangeRateType='M',P_NetDueInterval1InDays='30',P_NetDueInterval2InDays='60',P_NetDueInterval3InDays='90')/Results?$filter=(Supplier eq '%s')&$format=json"%supplier, auth=('karunak1', 'Welcome@1234')).json()
+         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_APFUTUREACCOUNTSPAYABLE_CDS/C_APFUTUREACCOUNTSPAYABLE(P_DateFunction='TODAY',P_DisplayCurrency='EUR',P_ExchangeRateType='M',P_NetDueInterval1InDays='30',P_NetDueInterval2InDays='60',P_NetDueInterval3InDays='90')/Results?$filter=(Supplier eq '%s')&$format=json"%supplier, auth=('karunak1', 'Welcome@1234'), verify=False).json()
          size = len(file['d']['results'])
          if(size == 0):
 	         output = "Invalid Supplier Number"
@@ -48,7 +48,7 @@ def results1():
     #### overdue payables       supplier - 17300001
     if (action == "ap_overdue"): 
          supplier = req['queryResult']['parameters']['supplierno']
-         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_APOVRD_CDS/C_APOVRD(P_DateFunction='TODAY',P_AgingGridMeasureInDays='30',P_CriticallyOverdueThreshold='70',P_DisplayCurrency='EUR')/Results?$filter=(Supplier eq '%s')&$format=json"%(supplier), auth=('karunak1', 'Welcome@1234')).json()
+         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_APOVRD_CDS/C_APOVRD(P_DateFunction='TODAY',P_AgingGridMeasureInDays='30',P_CriticallyOverdueThreshold='70',P_DisplayCurrency='EUR')/Results?$filter=(Supplier eq '%s')&$format=json"%(supplier), auth=('karunak1', 'Welcome@1234'), verify=False).json()
          size = len(file['d']['results'])
          if(size == 0):
 	         response = "Invalid Supplier Number"
@@ -62,7 +62,7 @@ def results1():
      #### aging analysis
     if (action == "ap_aging"):
          supplier = req['queryResult']['parameters']['supplierno']
-         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_APFLEXIBLEAGING_CDS/C_APFLEXIBLEAGING(P_DateFunction='TODAY',P_AgingGridMeasureInDays='0000000015',P_NumberOfAgingGridColumns='0000000004',P_DisplayCurrency='EUR')/Results?$filter=(Supplier eq '%s')&$format=json"%supplier, auth=('karunak1', 'Welcome@1234')).json()
+         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_APFLEXIBLEAGING_CDS/C_APFLEXIBLEAGING(P_DateFunction='TODAY',P_AgingGridMeasureInDays='0000000015',P_NumberOfAgingGridColumns='0000000004',P_DisplayCurrency='EUR')/Results?$filter=(Supplier eq '%s')&$format=json"%supplier, auth=('karunak1', 'Welcome@1234'), verify=False).json()
          size = len(file['d']['results'])
          if(size == 0):
              response = 'Invalid Supplier Number' 
@@ -76,7 +76,7 @@ def results1():
    	####Supplier Payment Analysis 
     if (action == "ap_supplierpayment"):
          supplier = req['queryResult']['parameters']['supplierno']
-         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_APMANUALPAYMENTS_CDS/C_APMANUALPAYMENTS(P_NumberOfDays='0',P_Currency='USD',P_ExchangeRateType='M')/Results?$filter=(Supplier eq '%s')&$format=json"%(supplier), auth=('karunak1', 'Welcome@1234')).json()
+         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_APMANUALPAYMENTS_CDS/C_APMANUALPAYMENTS(P_NumberOfDays='0',P_Currency='USD',P_ExchangeRateType='M')/Results?$filter=(Supplier eq '%s')&$format=json"%(supplier), auth=('karunak1', 'Welcome@1234'), verify=False).json()
          size = len(file['d']['results'])
          if(size== 0):
              response = 'Invalid Supplier Number'
