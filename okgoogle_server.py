@@ -122,10 +122,13 @@ def results1():
          if(size== 0):
              response = 'Invalid Customer Number'
          else:
-             CustomerName = file["d"]["results"][0]["CustomerName"] 
-             YearMonth = file["d"]["results"][5]["YearMonth"]
-             DaysSalesOutstanding = file["d"]["results"][5]["DaysSalesOutstanding"]
-             response = 'The days sales outstandings for year '+ YearMonth + ' is ' + DaysSalesOutstanding
+             CustomerName = file["d"]["results"][0]["CustomerName"]
+             YearMonth = file["d"]["results"][7]["YearMonth"]
+             monthinteger,yearinteger = YearMonth.split(".")
+             m = int(monthinteger)
+             month = datetime.date(1900, m, 1).strftime('%B')             
+             DaysSalesOutstanding = file["d"]["results"][7]["DaysSalesOutstanding"]
+             response = 'The days sales outstandings for month '+ month + 'and year' +  yearinteger  + ' is ' + DaysSalesOutstanding
          return {'fulfillmentText': response}	
 
     ####Incoming Payments 
