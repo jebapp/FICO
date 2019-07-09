@@ -99,7 +99,63 @@ def results1():
              NumberOfOpenItems_F = file["d"]["results"][0]["NumberOfOpenItems_F"]
              response = 'The total overdue amount is '+ TotalOverdueAmtInDspCrcy_F + ' for ' + CustomerName + 'and number of open items is ' + NumberOfOpenItems_F
          return {'fulfillmentText': response}	
+
+	####Total Receviables 
+    if (action == "ar_total"):
+         cnum = req['queryResult']['parameters']['supplierno']
+         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_TOTALACCOUNTSRECEIVABLES_CDS/C_TOTALACCOUNTSRECEIVABLES(P_DateFunction='TODAY',P_NetDueInterval1InDays='30',P_NetDueInterval2InDays='60',P_NetDueInterval3InDays='90',P_DisplayCurrency='USD',P_ExchangeRateType='M')/Results?$filter=Customer eq '%s'&$format=json" %cnum, auth=('Karunak1', 'Welcome@1234'), verify=False).json()
+         size = len(file['d']['results'])
+         if(size== 0):
+             response = 'Invalid Customer Number'
+         else:
+             CustomerName = file["d"]["results"][0]["CustomerName"] 
+             TotalOverdueAmtInDspCrcy_F = file["d"]["results"][0]["TotalOverdueAmtInDspCrcy_F"]
+             NetDueIntvl2AmtInDspCrcy = file["d"]["results"][0]["NetDueIntvl2AmtInDspCrcy"]
+             response = 'The total overdue amount is '+ TotalOverdueAmtInDspCrcy_F + ' for ' + CustomerName + 'and net due is ' + NetDueIntvl2AmtInDspCrcy
+         return {'fulfillmentText': response}
+
+        ####Days Sales Outstandings 
+    if (action == "ar_dso"):
+         cnum = req['queryResult']['parameters']['supplierno']
+         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_DAYSSALESOUTSTANDING_CDS/C_DAYSSALESOUTSTANDING(P_RblsRollingAverageMonths='1',P_RevnRollingAverageMonths='1',P_DisplayCurrency='USD',P_ExchangeRateType='M')/Results?$filter=Customer eq '%s'&$format=json" %cnum, auth=('Karunak1', 'Welcome@1234'), verify=False).json()
+         size = len(file['d']['results'])
+         if(size== 0):
+             response = 'Invalid Customer Number'
+         else:
+             CustomerName = file["d"]["results"][0]["CustomerName"] 
+             YearMonth = file["d"]["results"][5]["YearMonth"]
+             DaysSalesOutstanding = file["d"]["results"][5]["DaysSalesOutstanding"]
+             response = 'The days sales outstandings for year '+ YearMonth + ' is ' + DaysSalesOutstanding
+         return {'fulfillmentText': response}	
+
+    ####Incoming Payments 
+    if (action == "ar_incomingpayments"):
+         cnum = req['queryResult']['parameters']['supplierno']
+         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_ARBANKSTMTREPROCESSING_CDS/C_ARBANKSTMTREPROCESSING(P_ExchangeRateType='M',P_DisplayCurrency='USD')/Results?$filter=Customer eq '%s'&$format=json" %cnum, auth=('Karunak1', 'Welcome@1234'), verify=False).json()
+         size = len(file['d']['results'])
+         if(size== 0):
+             response = 'Invalid Customer Number'
+         else:
+             CustomerName = file["d"]["results"][0]["CustomerName"] 
+             NumberOfReprocessedItems = file["d"]["results"][0]["NumberOfReprocessedItems"]
+             response = 'The incoming payments for '+ CustomerName + ' are ' + NumberOfReprocessedItems
+         return {'fulfillmentText': response}	
 	
+   ####Days Beyond Terms
+    if (action == "ar_dbt"):
+         cnum = req['queryResult']['parameters']['supplierno']
+         file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_DAYSBEYONDTERMS_CDS/C_DAYSBEYONDTERMS(P_DisplayCurrency='USD',P_ExchangeRateType='M')/Results?$filter=Customer eq '%s'&$format=json" %cnum, auth=('Karunak1', 'Welcome@1234'), verify=False).json()
+         size = len(file['d']['results'])
+         if(size== 0):
+             response = 'Invalid Customer Number'
+         else:
+             CustomerName = file["d"]["results"][0]["CustomerName"]
+             BeyondTermDays = file["d"]["results"][3]["BeyondTermDays"]
+             PaymentsInTermPercent = file["d"]["results"][1]["PaymentsInTermPercent"]
+             PaymentsOutOfTermPercent = file["d"]["results"][1]["PaymentsOutOfTermPercent"]
+             response = 'The beyond terms for '+ CustomerName + ' is ' + BeyondTermDays + ' and payment in term percent is ' + PaymentsInTermPercent + ' and payment out of term percent is ' + PaymentsOutOfTermPercent
+         return {'fulfillmentText': response}	
+
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
     return (jsonify(results1()))
