@@ -88,7 +88,7 @@ def results1():
 	
 	####Future Receviables 
     if (action == "ar_future"):
-         cnum = req['queryResult']['parameters']['customer_number']
+         cnum = req['queryResult']['parameters']['supplierno']
          file = requests.get("https://sapdemo.kpit.com:1447/sap/opu/odata/sap/C_FUTUREACCTRBLS_CDS/C_FUTUREACCTRBLS(P_DateFunction='TODAY',P_DisplayCurrency='USD',P_ExchangeRateType='M',P_NetDueInterval1InDays='30',P_NetDueInterval2InDays='60',P_NetDueInterval3InDays='90',P_NetDueInterval4InDays='120')/Results?$filter=Customer eq '%s'&$format=json" %cnum, auth=('Karunak1', 'Welcome@1234'), verify=False).json()
          size = len(file['d']['results'])
          if(size== 0):
