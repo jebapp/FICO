@@ -129,7 +129,7 @@ def results1():
              m = int(monthinteger)
              month = datetime.date(1900, m, 1).strftime('%B')             
              DaysSalesOutstanding = file["d"]["results"][7]["DaysSalesOutstanding"]
-             response = 'The days sales outstandings for '+ month + ' and ' +  yearinteger  + ' is ' + DaysSalesOutstanding
+             response = 'The days sales outstandings for '+ month  +  yearinteger  + ' is ' + DaysSalesOutstanding
          return {'fulfillmentText': response}	
 
     ####Incoming Payments 
